@@ -1,0 +1,13 @@
+databaseChangeLog:
+  - include:
+      file: changelog-dev.yml
+      relativeToChangelogFile: true
+      context: dev
+  - include:
+      file: changelog-uat.yml
+      relativeToChangelogFile: true
+      context: uat
+  - include:
+      file: changelog-prod.yml
+      relativeToChangelogFile: true
+      context: prod

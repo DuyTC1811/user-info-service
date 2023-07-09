@@ -1,0 +1,71 @@
+<?xml version = "1.0" encoding = "UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.userinfomanager.mappers.IUserMapper">
+
+    <resultMap id = "findByIdUserResponse" type = "FindByIdUserResponse">
+        <result property = "userId" column = "USER_ID"/>
+        <result property = "username" column = "USERNAME"/>
+        <result property = "firstName" column = "FIRST_NAME"/>
+        <result property = "lastName" column = "LAST_NAME"/>
+        <result property = "mobile" column = "MOBILE"/>
+        <result property = "email" column = "EMAIL"/>
+        <result property = "password" column = "PASSWORD"/>
+    </resultMap>
+
+    <insert id="createUser" parameterType="registerUserRequest">
+        INSERT INTO USERS (USER_ID,
+                           USERNAME,
+                           FIRST_NAME,
+                           LAST_NAME,
+                           MOBILE,
+                           EMAIL,
+                           PASSWORD)
+        VALUES (#{userId}, #{username}, #{firstName}, #{lastName}, #{mobile}, #{email}, crypt(#{password}, gen_salt('bf')));
+        <foreach collection="rolesId" item="roleId">
+            INSERT INTO USER_ROLE (USER_ID, ROLE_ID) VALUES (#{userId}, #{roleId});
+        </foreach>
+    </insert>
+
+    <select id="findById" resultMap="findByIdUserResponse">
+        SELECT USER_ID,
+               USERNAME,
+               FIRST_NAME,
+               LAST_NAME,
+               MOBILE,
+               EMAIL,
+               PASSWORD
+        FROM USERS OFFSET #{offset} LIMIT #{limit};
+    </select>
+
+    <select id="totalItems" resultType="integer">
+        SELECT COUNT(USER_ID) FROM USERS;
+    </select>
+
+    <select id="getUserById" parameterType="getInfoUserRequest" resultType="getInfoUserResponse">
+        SELECT USER_ID,
+               USERNAME,
+               FIRST_NAME,
+               LAST_NAME,
+               MOBILE,
+               EMAIL,
+               PASSWORD
+        FROM USERS WHERE USER_ID = #{userId};
+    </select>
+
+    <select id="checkUserExists" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM USERS WHERE USERNAME = #{username} AND ACTIVE = 'ACTIVE');
+    </select>
+
+    <select id="checkEmailExists" parameterType="string" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM USERS WHERE EMAIL = #{email} AND ACTIVE = 'ACTIVE');
+    </select>
+
+    <select id="checkMobileExists" parameterType="string" resultType="boolean">
+        SELECT EXISTS(SELECT 1 FROM USERS WHERE MOBILE = #{moblie} AND ACTIVE = 'ACTIVE');
+    </select>
+
+    <select id="findByRoleName" resultType="string">
+        SELECT ROLE_ID FROM ROLE WHERE SLUG = #{slug} AND ACTIVE = 'ACTIVE';
+    </select>
+</mapper>
