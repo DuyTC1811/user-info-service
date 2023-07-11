@@ -24,6 +24,11 @@ spring:
     clear-checksums: true
     contexts: dev
 
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.0.188:8761/eureka/
+
 mybatis:
   configuration:
     map-underscore-to-camel-case: true

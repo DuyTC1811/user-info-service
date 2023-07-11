@@ -20,8 +20,8 @@ repositories {
     maven {
         url = uri('https://maven.pkg.github.com/DuyTC1811/common')
         credentials {
-            username = project.findProperty("gpr.user")
-            password = project.findProperty("gpr.key")
+            username = System.getenv('GPR_USER')
+            password = System.getenv('GPR_KEY')
         }
     }
 }
