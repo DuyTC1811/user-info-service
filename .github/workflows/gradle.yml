@@ -29,9 +29,14 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Run build with Gradle Wrapper
+        run: ./gradlew build
+
       - name: Build with Gradle | Build and Push Docker Image
         run: |
-          ./gradlew clean build --exclude-task test
           docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
           docker build . --file Dockerfile --tag ${{ secrets.DOCKERHUB_USERNAME }}/user-info-service:latest
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/user-info-service:latest
