@@ -20,8 +20,8 @@ repositories {
     maven {
         url = uri('https://maven.pkg.github.com/DuyTC1811/common')
         credentials {
-            username = System.getenv('secrets.DOCKERHUB_USERNAME')
-            password = System.getenv('secrets.DOCKERHUB_TOKEN')
+            username = 'duytc1811'
+            password = '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'
         }
     }
 }
