@@ -18,10 +18,6 @@ ext {
 repositories {
     mavenCentral()
     maven {
-        credentials {
-            username = 'duytc1811'
-            password = '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'
-        }
         url = uri('https://maven.pkg.github.com/DuyTC1811/common')
     }
 }
