@@ -30,7 +30,6 @@ jobs:
         run: chmod +x gradlew
 
       - name: Build with Gradle | Build and Push Docker Image
-        uses: gradle/gradle-build-action@v2
         run: |
           ./gradlew clean build --exclude-task test
           docker login --username ${{ secrets.DOCKERHUB_USERNAME }} --password ${{ secrets.DOCKERHUB_TOKEN }}
