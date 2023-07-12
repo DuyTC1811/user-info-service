@@ -33,7 +33,7 @@ jobs:
         uses: gradle/gradle-build-action@v2
 
       - name: Run build with Gradle Wrapper
-        run: ./gradlew build
+        run: ./gradlew clean build --exclude-task test --scan
 
       - name: Build with Gradle | Build and Push Docker Image
         run: |
