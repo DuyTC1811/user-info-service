@@ -29,6 +29,17 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
+      - uses: s4u/maven-settings-action@v2.8.0
+        with:
+          servers: |
+            [{
+                "id": "DuyTC1811-common",
+                "url": "https://maven.pkg.github.com/DuyTC1811/common",
+                "username": "${{ secrets.CUSTOM_REPO_USERNAME }}",
+                "password": "${{ secrets.CUSTOM_REPO_PASSWORD }}"
+            }]
+
+
       - name: Build with Gradle | Build and Push Docker Image
         run: |
           ./gradlew clean build --exclude-task test
