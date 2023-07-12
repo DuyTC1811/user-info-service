@@ -36,10 +36,7 @@ jobs:
         run: |
           echo "gpr.user=duytc1811" >> gradle.properties
           echo "gpr.key=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" >> gradle.properties
-          ls -all
-          cat gradle.properties
-
-#          ./gradlew clean build --exclude-task test --scan
+          ./gradlew clean build --exclude-task test
 
 #      - name: Build and Push Docker Image
 #        run: |
