@@ -33,7 +33,6 @@ jobs:
         with:
           servers: |
             [{
-                "id": "DuyTC1811-common",
                 "url": "https://maven.pkg.github.com/DuyTC1811/common",
                 "username": "${{ secrets.CUSTOM_REPO_USERNAME }}",
                 "password": "${{ secrets.CUSTOM_REPO_PASSWORD }}"
