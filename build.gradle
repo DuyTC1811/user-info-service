@@ -18,10 +18,10 @@ ext {
 repositories {
     mavenCentral()
     maven {
-        url = uri('https://maven.pkg.github.com/DuyTC1811/common')
+        url = uri("https://maven.pkg.github.com/DuyTC1811/common")
         credentials {
-            username = 'duytc1811'
-            password = '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'
+            username = project.findProperty("gpr.user")
+            password = project.findProperty("gpr.key")
         }
     }
 }
