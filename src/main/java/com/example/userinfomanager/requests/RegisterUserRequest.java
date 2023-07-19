@@ -20,5 +20,5 @@ public class RegisterUserRequest implements ICommand<RegisterUserResponse> {
     private String mobile;
     private String email;
     private String password;
-    private Set<String> rolesId;
+    private Set<String> roles;
 }

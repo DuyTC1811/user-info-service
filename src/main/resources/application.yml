@@ -1,9 +1,13 @@
 server:
   port: 0
+eureka:
+  client:
+    service-url:
+      defaultZone: http://192.168.0.188:8761/eureka/
 
 spring:
   application:
-    name: userinfo
+    name: USERINFO
 
   datasource:
     url: jdbc:postgresql://192.168.0.188:5432/postgres
@@ -23,11 +27,6 @@ spring:
     change-log: classpath:/liquibase/main-changelog.yml
     clear-checksums: true
     contexts: dev
-
-eureka:
-  client:
-    service-url:
-      defaultZone: http://192.168.0.188:8761/eureka/
 
 mybatis:
   configuration:
