@@ -12,10 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.example.userinfomanager.constants.RegexConstants.EMAIL_REGEX;
+import static com.example.userinfomanager.constants.RegexConstants.PHONE_NUMBER_REGEX;
 import static io.utilities.constant.ERole.*;
+import static io.utilities.regexs.RegexUtils.validateRegex;
 
 @Service
-@Transactional
 public class RegisterUserHandler implements ICommandHandler<RegisterUserResponse, RegisterUserRequest> {
     private final IUserMapper userMapper;
 
@@ -24,18 +26,25 @@ public class RegisterUserHandler implements ICommandHandler<RegisterUserResponse
     }
 
     @Override
+    @Transactional
     public BaseResponse<RegisterUserResponse> handler(RegisterUserRequest request) {
         if (userMapper.checkUserExists(request.getUsername())) {
-            throw new BaseException("Error: Username is already taken!");
+            throw new BaseException("Username is already taken!");
+        }
+        if (!validateRegex(request.getEmail(), EMAIL_REGEX)) {
+            throw new BaseException(request.getEmail() + " Invalid Email! ");
         }
         if (userMapper.checkEmailExists(request.getEmail())) {
-            throw new BaseException("Error: Email is already in use!");
+            throw new BaseException("Email is already in use!");
+        }
+        if (!validateRegex(request.getMobile(), PHONE_NUMBER_REGEX)) {
+            throw new BaseException(request.getMobile() + " Invalid Phone Number! ");
         }
         if (userMapper.checkMobileExists(request.getMobile())) {
-            throw new BaseException("Error: Phone is already in use!");
+            throw new BaseException("Phone is already in use!");
         }
 
-        Set<String> strRoles = request.getRolesId();
+        Set<String> strRoles = request.getRoles();
         Set<String> roles = new HashSet<>();
         if (strRoles == null) {
             String userRoleId = userMapper.findByRoleName(ROLE_USER.name());
@@ -60,13 +69,14 @@ public class RegisterUserHandler implements ICommandHandler<RegisterUserResponse
                 }
             });
         }
-        request.setRolesId(roles);
+        request.setRoles(roles);
         request.setPassword(request.getPassword());
         int user = userMapper.createUser(request);
         if (user == 0) {
             throw new BaseException("Registration failed !");
         }
-        RegisterUserResponse response = RegisterUserResponse.builder().messenger("User registered successfully! " + user).build();
+        RegisterUserResponse response = RegisterUserResponse.builder()
+                .messenger("User registered successfully! " + request.getUsername()).build();
         return new BaseResponse<>(response);
     }
 }

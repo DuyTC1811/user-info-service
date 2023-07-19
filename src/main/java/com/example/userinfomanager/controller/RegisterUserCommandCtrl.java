@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class RegisterUserCommandCtrl extends CommandController<RegisterUserResponse, RegisterUserRequest> {
 
     @PostMapping("/create-user")
-    protected ResponseEntity<BaseResponse<RegisterUserResponse>> registerUser(RegisterUserRequest request) {
+    protected ResponseEntity<BaseResponse<RegisterUserResponse>> registerUser(@RequestBody RegisterUserRequest request) {
         return execute(request);
     }
 }

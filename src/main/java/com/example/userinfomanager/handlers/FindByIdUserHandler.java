@@ -6,6 +6,7 @@ import com.example.userinfomanager.responses.FindByIdUserResponse;
 import io.cqrs.model.PageResponse;
 import io.cqrs.query.IPageHandler;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -18,6 +19,7 @@ public class FindByIdUserHandler implements IPageHandler<FindByIdUserResponse, F
     }
 
     @Override
+    @Transactional
     public PageResponse<FindByIdUserResponse> handle(FindByIdUserRequest request) {
         List<FindByIdUserResponse> byIdList = userMapper.findById(request);
         int totalItems = userMapper.totalItems();
