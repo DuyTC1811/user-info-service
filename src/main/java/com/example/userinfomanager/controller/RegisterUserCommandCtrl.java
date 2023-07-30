@@ -8,10 +8,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class RegisterUserCommandCtrl extends CommandController<RegisterUserResponse, RegisterUserRequest> {
 
-    @PostMapping("/create-user")
+    @PostMapping("/register-user")
     protected ResponseEntity<BaseResponse<RegisterUserResponse>> registerUser(@RequestBody RegisterUserRequest request) {
         return execute(request);
     }
