@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/user")
 public class FindByIdUserQueryCtrl extends PageController<FindByIdUserResponse, FindByIdUserRequest> {
 
     @GetMapping("/find-all/{limit}/{offset}")
